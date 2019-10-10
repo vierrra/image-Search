@@ -22,6 +22,9 @@ func getNewAlbum() -> Album{
 
 class ViewController: UIViewController {
 
+    
+    
+    @IBOutlet weak var imageBlur: UIImageView!
     @IBOutlet weak var image: UIImageView!
     
     @IBOutlet weak var label: UILabel!
@@ -48,6 +51,8 @@ class ViewController: UIViewController {
             
             
             image.image = UIImage(named: album.albumCover)
+            imageBlur.image = UIImage(named: album.albumCover)
+            
             
             
             
