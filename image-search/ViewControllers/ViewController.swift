@@ -8,6 +8,24 @@
 
 import UIKit
 
+struct Images: Codable{
+    
+    let id: String?
+    let artistName: String?
+    let recordLabel: String?
+    let albumName: String?
+    let algumCover: URL?
+    
+    private enum CodingKeys: String, CodingKey{
+        
+        case id
+        case artisName
+        case recordLabel
+        case albumName
+        case albumCover = "album_cover"
+    }
+}
+
 
 
 
