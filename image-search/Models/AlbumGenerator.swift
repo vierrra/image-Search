@@ -2,7 +2,7 @@
 //  AlbumGenerator.swift
 //  image-search
 //
-//  Created by Stant on 08/10/19.
+//  Created by Renato Vieira on 08/10/19.
 //  Copyright © 2019 Stant. All rights reserved.
 //
 
@@ -17,5 +17,7 @@ struct AlbumGenerator {
     init(){
         albumListing = [album1, album2]
     }
+
+
     
 }

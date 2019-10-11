@@ -2,28 +2,20 @@
 //  ViewController.swift
 //  image-search
 //
-//  Created by Renato on 9/25/19.
+//  Created by Renato Vieira on 9/25/19.
 //  Copyright © 2019 Stant. All rights reserved.
 //
 
 import UIKit
 
 
-func getNewAlbum() -> Album{
-    let albumGeneretor = AlbumGenerator()
-    let numberAlbum = Int.random(in: 0..<albumGeneretor.albumListing.count)
-    let newAlbum: Album = albumGeneretor.albumListing[numberAlbum]
-    
-    return newAlbum
-  
-    
-}
+
 
 
 class ViewController: UIViewController {
 
     
-    
+    let  activityIndicatorIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
     @IBOutlet weak var imageBlur: UIImageView!
     @IBOutlet weak var image: UIImageView!
     
@@ -31,6 +23,17 @@ class ViewController: UIViewController {
     @IBOutlet weak var labelNameMusic: UILabel!
     @IBOutlet weak var labelNameArtist: UILabel!
     @IBOutlet weak var button: UIButton!
+    
+    
+    func getNewAlbum() -> Album{
+        let albumGeneretor = AlbumGenerator()
+        let numberAlbum = Int.random(in: 0..<albumGeneretor.albumListing.count)
+        let newAlbum: Album = albumGeneretor.albumListing[numberAlbum]
+        
+        return newAlbum
+      
+        
+    }
     
 
     override func viewDidLoad() {
@@ -43,15 +46,23 @@ class ViewController: UIViewController {
     
         @IBAction func alterText(_ sender: Any) {
             
+            activityIndicatorIndicator.center = self.view.center
+            activityIndicatorIndicator.style = UIActivityIndicatorView.Style.white
+            view.addSubview(activityIndicatorIndicator)
+            
+           
             let album = getNewAlbum()
             labelNameMusic.text = album.recordLabel
             labelNameArtist.text = album.artistName
             label.text = album.albumName
             
             
+            activityIndicatorIndicator.startAnimating()
             
             image.image = UIImage(named: album.albumCover)
             imageBlur.image = UIImage(named: album.albumCover)
+            
+            activityIndicatorIndicator.stopAnimating()
             
             
             
