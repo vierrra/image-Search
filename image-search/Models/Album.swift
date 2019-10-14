@@ -2,7 +2,7 @@
 //  Album.swift
 //  image-search
 //
-//  Created by Stant on 08/10/19.
+//  Created by Renato Vieira on 08/10/19.
 //  Copyright © 2019 Stant. All rights reserved.
 //
 
@@ -23,4 +23,6 @@ class Album {
         self.albumName = albumName
         self.albumCover = albumCover
     }
+    
+
 }
