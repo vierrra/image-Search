@@ -110,10 +110,10 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <outlet property="button" destination="KUK-3c-37f" id="KC5-Mg-V6v"/>
+                        <outlet property="buttonSearchAlbum" destination="KUK-3c-37f" id="KC5-Mg-V6v"/>
                         <outlet property="image" destination="C1P-O0-83p" id="edN-B5-JnQ"/>
                         <outlet property="imageBlur" destination="qd8-KA-49w" id="ULm-qF-tNX"/>
-                        <outlet property="label" destination="FLJ-q3-B72" id="1Np-4L-6mW"/>
+                        <outlet property="labelNameAlbum" destination="FLJ-q3-B72" id="1Np-4L-6mW"/>
                         <outlet property="labelNameArtist" destination="8mn-Eb-DNn" id="NH5-1O-ZVc"/>
                         <outlet property="labelNameMusic" destination="kKq-76-E2V" id="v1z-GB-heU"/>
                     </connections>

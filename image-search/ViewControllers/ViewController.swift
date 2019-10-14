@@ -8,65 +8,49 @@
 
 import UIKit
 
-
-
-
-
 class ViewController: UIViewController {
-
     
-    let  activityIndicatorIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
-    @IBOutlet weak var imageBlur: UIImageView!
-    @IBOutlet weak var image: UIImageView!
+    let  activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     
-    @IBOutlet weak var label: UILabel!
-    @IBOutlet weak var labelNameMusic: UILabel!
-    @IBOutlet weak var labelNameArtist: UILabel!
-    @IBOutlet weak var button: UIButton!
-    
+    @IBOutlet weak var imageBlur        : UIImageView!
+    @IBOutlet weak var image            : UIImageView!
+    @IBOutlet weak var labelNameAlbum   : UILabel!
+    @IBOutlet weak var labelNameMusic   : UILabel!
+    @IBOutlet weak var labelNameArtist  : UILabel!
+    @IBOutlet weak var buttonSearchAlbum: UIButton!
     
     func getNewAlbum() -> Album{
-        let albumGeneretor = AlbumGenerator()
-        let numberAlbum = Int.random(in: 0..<albumGeneretor.albumListing.count)
+        
+        let albumGeneretor  = AlbumGenerator()
+        let numberAlbum     = Int.random(in: 0..<albumGeneretor.albumListing.count)
         let newAlbum: Album = albumGeneretor.albumListing[numberAlbum]
         
         return newAlbum
-      
-        
     }
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        button.layer.cornerRadius = 27
-        
+        buttonSearchAlbum.layer.cornerRadius = 27
     }
     
-    
-        @IBAction func alterText(_ sender: Any) {
+    @IBAction func alterText(_ sender: Any) {
             
-            activityIndicatorIndicator.center = self.view.center
-            activityIndicatorIndicator.style = UIActivityIndicatorView.Style.white
-            view.addSubview(activityIndicatorIndicator)
+        activityIndicator.center = self.view.center
+        activityIndicator.style  = UIActivityIndicatorView.Style.white
+        view.addSubview(activityIndicator)
             
-           
-            let album = getNewAlbum()
-            labelNameMusic.text = album.recordLabel
-            labelNameArtist.text = album.artistName
-            label.text = album.albumName
+        let album = getNewAlbum()
+        
+        activityIndicator.startAnimating()
+        
+        labelNameMusic.text  = album.recordLabel
+        labelNameArtist.text = album.artistName
+        labelNameAlbum.text  = album.albumName
             
+        image.image     = UIImage(named: album.albumCover)
+        imageBlur.image = UIImage(named: album.albumCover)
             
-            activityIndicatorIndicator.startAnimating()
-            
-            image.image = UIImage(named: album.albumCover)
-            imageBlur.image = UIImage(named: album.albumCover)
-            
-            activityIndicatorIndicator.stopAnimating()
-            
-            
-            
-            
-        }
-    
+        activityIndicator.stopAnimating()
+    }
 }
