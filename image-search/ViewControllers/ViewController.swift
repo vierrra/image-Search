@@ -28,10 +28,6 @@ struct SearchImages: Codable{
     }
 }
 
-
-
-
-
 class ViewController: UIViewController {
     
     let  activityIndicatorIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
@@ -44,15 +40,14 @@ class ViewController: UIViewController {
     @IBOutlet weak var button         : UIButton!
     
     
-    func getNewAlbum() -> Album{
-        let albumGeneretor = AlbumGenerator()
-        let numberAlbum = Int.random(in: 0..<albumGeneretor.albumListing.count)
-        let newAlbum: Album = albumGeneretor.albumListing[numberAlbum]
-        
-        return newAlbum
-      
-        
-    }
+//    func getNewAlbum() -> Album{
+//        let albumGeneretor = AlbumGenerator()
+//        let numberAlbum = Int.random(in: 0..<albumGeneretor.albumListing.count)
+//        let newAlbum: Album = albumGeneretor.albumListing[numberAlbum]
+//
+//        return newAlbum
+//
+//    }
     
 
     override func viewDidLoad() {
@@ -67,25 +62,42 @@ class ViewController: UIViewController {
             
             //Request Json
             guard let fakeUrl = URL(string: "http://fakerapiexample.herokuapp.com/album") else { return }
+            
             URLSession.shared.dataTask(with: fakeUrl) { (data, response
                      , error) in
+                
                      guard let data = data else { return }
+                
                      do {
                          let decoder = JSONDecoder()
                          let gitData = try decoder.decode(SearchImages.self, from: data)
                          DispatchQueue.main.sync {
 
-                            if let gimage = gitData.albumCover {
-                             let data = try? Data(contentsOf: gimage)
-                             let image: UIImage = UIImage(data: data!)!
-                             self.image.image = image
-                         }
+                            
+                            if let url = URL(string: gitData.albumCover ?? "") {
+                                let data = try? Data(contentsOf: url)
+                                let image: UIImage = UIImage(data: data!)!
+                                self.image.image = image
+                            }
+
+                            
+                            if let anameAlbum = gitData.albumName {
+                                self.labelNameAlbum.text = anameAlbum
+                            }
+                            
+                            if let anameArtist = gitData.artistName {
+                                self.labelNameArtist.text = anameArtist
+                            }
+                            
+                            if let anameMusic = gitData.recordLabel {
+                                self.labelNameMusic.text = anameMusic
+                            }
                         }
 
                      } catch let err {
                          print("Err", err)
-                  }
-            }.resume()
+                    }
+                    }.resume()
             
             
             
@@ -96,12 +108,12 @@ class ViewController: UIViewController {
             activityIndicatorIndicator.activityIndicatorViewStyle = UIActivityIndicatorView.Style.white
             view.addSubview(activityIndicatorIndicator)
             
-            let album = getNewAlbum()
-            labelNameMusic.text = album.recordLabel
-            labelNameArtist.text = album.artistName
-            labelNameAlbum.text = album.albumName
-            image.image = UIImage(named: album.albumCover)
-            imageBlur.image = UIImage(named: album.albumCover)
+//            let album = getNewAlbum()
+//            labelNameMusic.text = album.recordLabel
+//            labelNameArtist.text = album.artistName
+//            labelNameAlbum.text = album.albumName
+//            image.image = UIImage(named: album.albumCover)
+//            imageBlur.image = UIImage(named: album.albumCover)
             
             activityIndicatorIndicator.stopAnimating()
             
