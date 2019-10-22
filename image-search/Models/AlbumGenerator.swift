@@ -8,16 +8,16 @@
 
 import Foundation
 
-struct AlbumGenerator {
-    var album1 = Album(id: 1, artistName: "Nirvana", recordLabel: "Smells Like Teen Spirit", albumName: "Nevermind", albumCover: "nirvana.jpg")
-    var album2 = Album(id: 2, artistName: "PearlJam", recordLabel: "Black", albumName: "Alive", albumCover: "pearl.jpg")
-    
-    var albumListing: [Album]
-    
-    init(){
-        albumListing = [album1, album2]
-    }
-
-
-    
-}
+//struct AlbumGenerator {
+//    var album1 = Album(id: 1, artistName: "Nirvana", recordLabel: "Smells Like Teen Spirit", albumName: "Nevermind", albumCover: "nirvana.jpg")
+//    var album2 = Album(id: 2, artistName: "PearlJam", recordLabel: "Black", albumName: "Alive", albumCover: "pearl.jpg")
+//    
+//    var albumListing: [Album]
+//    
+//    init(){
+//        albumListing = [album1, album2]
+//    }
+//
+//
+//    
+//}
