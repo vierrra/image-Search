@@ -9,10 +9,10 @@
 import Foundation
 import UIKit
 
-class Alerta: NSObject {
+class Alert: NSObject {
 
-    func exibir(_ controller: UIViewController, _ titulo: String, _ mensagem: String) {
-        let alert  = UIAlertController(title: titulo, message: mensagem, preferredStyle: .alert)
+    func display(_ controller: UIViewController, _ titulo: String, _ mensagem: String) {
+        let alert = UIAlertController(title: titulo, message: mensagem, preferredStyle: .alert)
         let button = UIAlertAction(title: "Ok", style: .default, handler: nil)
         alert.addAction(button)
 

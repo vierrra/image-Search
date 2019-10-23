@@ -10,7 +10,7 @@ import UIKit
 
 class ViewController: UIViewController {
     
-   let  activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
+    let  activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
     
     @IBOutlet weak var imageBlur       : UIImageView!
     @IBOutlet weak var image           : UIImageView!
@@ -19,22 +19,10 @@ class ViewController: UIViewController {
     @IBOutlet weak var labelNameArtist : UILabel!
     @IBOutlet weak var button          : UIButton!
     
-    
-//    func getNewAlbum() -> Album{
-//        let albumGeneretor = AlbumGenerator()
-//        let numberAlbum = Int.random(in: 0..<albumGeneretor.albumListing.count)
-//        let newAlbum: Album = albumGeneretor.albumListing[numberAlbum]
-//
-//        return newAlbum
-    
-//
-//    }
-    
 override func viewDidLoad() {
         super.viewDidLoad()
         button.layer.cornerRadius = 27
-        
-        
+    
 }
     
      @IBAction func alterText(_ sender: Any) {
@@ -44,13 +32,12 @@ override func viewDidLoad() {
             view.addSubview(activityIndicator)
             self.activityIndicator.startAnimating()
             
-            
-            //Request API
-            guard let fakeUrl = URL(string: "http://fakerapiexample.herokuapp.com/album") else { return }
+            guard let fakeUrl = URL(string: "http://fakerapiexample.herokuapp.com/album2") else { return }
             
             URLSession.shared.dataTask(with: fakeUrl) { (data, response, error) in
-                
+                     
                      guard let data = data else { return }
+                    //fazer aqui tratamento de ausencia de internet
                 
                      do {
                          let decoder = JSONDecoder()
@@ -80,11 +67,14 @@ override func viewDidLoad() {
                                     }
                                     
                                 self.activityIndicator.stopAnimating()
-                                }
+                        }
 
-                    } catch let err {
-                        print(err)
-                    }
+                    } catch {
+                                            
+                        //Alert().display(self, "Attention", error.localizedDescription)
+                        print(error.localizedDescription)
+                        
+                      }
             }.resume()
             
     }
