@@ -10,8 +10,7 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    let  loadActivityIndicator = ActivityIndicator()
-    let gradient: CAGradientLayer = CAGradientLayer()
+   let  activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
     
     @IBOutlet weak var imageBlur       : UIImageView!
     @IBOutlet weak var image           : UIImageView!
@@ -34,22 +33,17 @@ class ViewController: UIViewController {
 override func viewDidLoad() {
         super.viewDidLoad()
         button.layer.cornerRadius = 27
-        self.view.layer.insertSublayer(gradient, at: 0)
+        
         
 }
     
-    override func viewDidAppear(_ animated: Bool) {
-        gradient.frame         = self.view.safeAreaLayoutGuide.layoutFrame
-        loadActivityIndicator.view.frame = self.view.safeAreaLayoutGuide.layoutFrame
-    }
-    
-    
-    
-    @IBAction func alterText(_ sender: Any) {
+     @IBAction func alterText(_ sender: Any) {
         
-//            activityIndicator.center                     = self.view.center
-//            activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorView.Style.white
-//            view.addSubview(activityIndicator)
+            activityIndicator.center                     = self.view.center
+            activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorView.Style.white
+            view.addSubview(activityIndicator)
+            self.activityIndicator.startAnimating()
+            
             
             //Request API
             guard let fakeUrl = URL(string: "http://fakerapiexample.herokuapp.com/album") else { return }
@@ -62,17 +56,15 @@ override func viewDidLoad() {
                          let decoder = JSONDecoder()
                          let gitData = try decoder.decode(SearchImages.self, from: data)
                         
-//                        func RecoveryAlbum(){
                             DispatchQueue.main.sync {
-                                self.view.addSubview(self.loadActivityIndicator.view)
-                                //self.activityIndicator.startAnimating()
+                                                                
                                     if let url = URL(string: gitData.albumCover ?? "") {
                                        let data = try? Data(contentsOf: url)
                                        let image: UIImage     = UIImage(data: data!)!
                                        let imageBlur: UIImage = UIImage(data: data!)!
                                        self.imageBlur.image   = imageBlur
                                        self.image.image       = image
-                                       self.loadActivityIndicator.view.removeFromSuperview()
+                                      
                                     }
 
                                     if let anameAlbum            = gitData.albumName {
@@ -87,19 +79,14 @@ override func viewDidLoad() {
                                         self.labelAlbumCover.text = anameAlbumCover
                                     }
                                     
-                                
-                                //self.activityIndicator.stopAnimating()
+                                self.activityIndicator.stopAnimating()
                                 }
-//                        }
 
-                    } catch {
-                        //Alerta.exibir(self, "Atenção", error.localizedDescription)
-                        //print("ferrou!!!", error)
+                    } catch let err {
+                        print(err)
                     }
             }.resume()
             
-           
-    
-        }
+    }
     
 }
