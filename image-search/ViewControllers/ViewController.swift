@@ -32,13 +32,13 @@ override func viewDidLoad() {
             view.addSubview(activityIndicator)
             self.activityIndicator.startAnimating()
             
-            guard let fakeUrl = URL(string: "http://fakerapiexample.herokuapp.com/album2") else { return }
+            guard let fakeUrl = URL(string: "http://fakerapiexample.herokuapp.com/album") else { return }
             
             URLSession.shared.dataTask(with: fakeUrl) { (data, response, error) in
-                     
-                     guard let data = data else { return }
-                    //fazer aqui tratamento de ausencia de internet
-                
+               
+                                             
+                guard let data = data else {return}
+               
                      do {
                          let decoder = JSONDecoder()
                          let gitData = try decoder.decode(SearchImages.self, from: data)
@@ -70,11 +70,13 @@ override func viewDidLoad() {
                         }
 
                     } catch {
-                                            
-                        //Alert().display(self, "Attention", error.localizedDescription)
-                        print(error.localizedDescription)
+                         
+                        DispatchQueue.main.async {
+                            Alert().display(self, "Attention", error.localizedDescription)
+                            self.activityIndicator.stopAnimating()
+                        }
                         
-                      }
+                    }
             }.resume()
             
     }
