@@ -10,7 +10,8 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    let  activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
+    let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+    let urlApi = "http://fakerapiexample.herokuapp.com/album"
     
     @IBOutlet weak var imageBlur       : UIImageView!
     @IBOutlet weak var image           : UIImageView!
@@ -22,64 +23,107 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         button.layer.cornerRadius = 27
+        self.getAlbum()
+    
     }
     
-        @IBAction func alterText(_ sender: Any) {
+   
+    
+    @IBAction func alterText(_ sender: Any) {
         
-                activityIndicator.center                     = self.view.center
-                activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorView.Style.white
-                view.addSubview(activityIndicator)
-                self.activityIndicator.startAnimating()
-                
-                guard let fakeUrl = URL(string: "http://fakerapiexample.herokuapp.com/album") else { return }
-                
-                URLSession.shared.dataTask(with: fakeUrl) { (data, response, error) in
-                                                                
-                    guard let data = data else {
-                        
-                       DispatchQueue.main.async {
-                            Alert().display(self, "Attention", error?.localizedDescription ?? "Internet offline")
-                            self.activityIndicator.stopAnimating()
-                        }
-                        
-                    return}
-                   
-                         do {
-                             let decoder = JSONDecoder()
-                             let gitData = try decoder.decode(SearchImages.self, from: data)
-                            
-                                DispatchQueue.main.sync {
-                                                                    
-                                        if let url = URL(string: gitData.albumCover ?? "") {
-                                           let data = try? Data(contentsOf: url)
-                                           let image: UIImage     = UIImage(data: data!)!
-                                           let imageBlur: UIImage = UIImage(data: data!)!
-                                           self.imageBlur.image   = imageBlur
-                                           self.image.image       = image
-                                        }
+//        activityIndicator.center = self.view.center
+//        activityIndicator.style  = UIActivityIndicatorView.Style.large
+//
+//        view.addSubview(activityIndicator)
+//        self.activityIndicator.startAnimating()
+        self.getAlbum()
 
-                                        if let anameAlbum             = gitData.albumName {
-                                            self.labelNameAlbum.text  = anameAlbum
-                                        }
-                                        
-                                        if let anameArtist            = gitData.artistName {
-                                            self.labelNameArtist.text = anameArtist
-                                        }
-                                        
-                                        if let anameAlbumCover        = gitData.recordLabel {
-                                            self.labelAlbumCover.text = anameAlbumCover
-                                        }
-                                        
-                                    self.activityIndicator.stopAnimating()
-                               }
+//                guard let fakeUrl = URL(string: urlApi) else { return }
+//
+//                URLSession.shared.dataTask(with: fakeUrl) { (data, response, error) in
+//
+//                    guard let data = data else {
+//
+//                       DispatchQueue.main.async {
+//                            Alert().display(self, "Attention", error?.localizedDescription ?? "Internet offline")
+//                            self.activityIndicator.stopAnimating()
+//                        }
+//
+//                        return
+//
+//                    }
+//
+//                         do {
+//                             let decoder = JSONDecoder()
+//                             let gitData = try decoder.decode(SearchImages.self, from: data)
+//
+//                                DispatchQueue.main.sync {
+//
+//                                        if let url = URL(string: gitData.albumCover ?? "") {
+//                                           let data               = try? Data(contentsOf: url)
+//                                           let image: UIImage     = UIImage(data: data!)!
+//                                           let imageBlur: UIImage = UIImage(data: data!)!
+//                                           self.imageBlur.image   = imageBlur
+//                                           self.image.image       = image
+//                                        }
+//
+//                                        if let anameAlbum             = gitData.albumName {
+//                                            self.labelNameAlbum.text  = anameAlbum
+//                                        }
+//
+//                                        if let anameArtist            = gitData.artistName {
+//                                            self.labelNameArtist.text = anameArtist
+//                                        }
+//
+//                                        if let anameAlbumCover        = gitData.recordLabel {
+//                                            self.labelAlbumCover.text = anameAlbumCover
+//                                        }
+//
+//                                    self.activityIndicator.stopAnimating()
+//                               }
+//
+//                        } catch {
+//
+//                            DispatchQueue.main.async {
+//                                Alert().display(self, "Attention", error.localizedDescription)
+//                                self.activityIndicator.stopAnimating()
+//                            }
+//                        }
+//                }.resume()
+        
+    }
+    
+    func getAlbum() {
+        mountAlbum (url: urlApi, view: self)
+    }
+    
+    func updateAlbum(gitData: SearchImages) {
 
-                        } catch {
-                             
-                            DispatchQueue.main.async {
-                                Alert().display(self, "Attention", error.localizedDescription)
-                                self.activityIndicator.stopAnimating()
-                            }
-                        }
-                }.resume()
-      }
+
+        request(getURL: gitData.albumCover!, requestResponse: { data, error in
+            DispatchQueue.main.sync {
+
+                if let url = URL(string: gitData.albumCover ?? "") {
+                   let data               = try? Data(contentsOf: url)
+                   let image: UIImage     = UIImage(data: data!)!
+                   let imageBlur: UIImage = UIImage(data: data!)!
+                   self.imageBlur.image   = imageBlur
+                   self.image.image       = image
+                }
+                
+                if let anameAlbum             = gitData.albumName {
+                    self.labelNameAlbum.text  = anameAlbum
+                }
+
+                if let anameArtist            = gitData.artistName {
+                    self.labelNameArtist.text = anameArtist
+                }
+
+                if let anameAlbumCover        = gitData.recordLabel {
+                    self.labelAlbumCover.text = anameAlbumCover
+                }
+            }
+        })
+    }
+    
 }
