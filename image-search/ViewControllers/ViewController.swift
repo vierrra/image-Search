@@ -10,8 +10,9 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
-    let urlApi = "http://fakerapiexample.herokuapp.com/album"
+    //let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+    let urlApi  = "http://fakerapiexample.herokuapp.com/album"
+    let loading = ActivytyIndicator()
     
     @IBOutlet weak var imageBlur       : UIImageView!
     @IBOutlet weak var image           : UIImageView!
@@ -23,20 +24,24 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         button.layer.cornerRadius = 27
-        activityIndicator.center = self.view.center
-        activityIndicator.style  = UIActivityIndicatorView.Style.large
-        view.addSubview(activityIndicator)
-        self.activityIndicator.startAnimating()
+        
+//        activityIndicator.center = self.view.center
+//        activityIndicator.style  = UIActivityIndicatorView.Style.large
+//        view.addSubview(activityIndicator)
+//        self.activityIndicator.startAnimating()
+        
         self.getAlbum()
+        
         //self.activityIndicator.stopAnimating()
     
     }
     
-   
+    override func viewDidAppear(_ animated: Bool) {
+        loading.view.frame = self.view.safeAreaLayoutGuide.layoutFrame
+    }
     
     @IBAction func alterText(_ sender: Any) {
                 
-     
       self.getAlbum()
       //self.activityIndicator.stopAnimating()
 
@@ -100,6 +105,9 @@ class ViewController: UIViewController {
     }
          
     func updateAlbum(gitData: SearchImages) {
+        DispatchQueue.main.sync {
+            view.addSubview(loading.view)
+        }
         
         DispatchQueue.main.sync {
             if let url = URL(string: gitData.albumCover ?? "") {
@@ -121,6 +129,7 @@ class ViewController: UIViewController {
             if let anameAlbumCover        = gitData.recordLabel {
                 self.labelAlbumCover.text = anameAlbumCover
             }
+            self.loading.view.removeFromSuperview()
         }
     }
 }
