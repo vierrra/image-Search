@@ -20,28 +20,20 @@ import UIKit
 //    }
 //}
 
-func request(getURL: String, requestResponse: @escaping (Data?, Error?) -> Void) {
-    guard let fakeUrl = URL(string: getURL) else { return }
-    URLSession.shared.dataTask(with: fakeUrl) { (data, response, error) in
-        guard data != nil else {return}
+func requestAlbum(url: String, view: ViewController) {
+    if let fakeUrl = URL(string: "http://fakerapiexample.herokuapp.com/album") {
+        URLSession.shared.dataTask(with: fakeUrl) { (data, response, error) in
+            guard let data = data else {return}
     
-    }.resume()
-                                        
-}
-
-func mountAlbum(url: String, view: ViewController) {
-    request(getURL: url, requestResponse: { data, error in
-        if let responseData = data {
             do {
-                 let decoder = JSONDecoder()
-                 let gitData = try decoder.decode(SearchImages.self, from: responseData)
-                 view.updateAlbum(gitData: gitData)
-                
+                let decoder = JSONDecoder()
+                let gitData = try decoder.decode(SearchImages.self, from: data)
+                view.updateAlbum(gitData: gitData)
             } catch {
-            
-            }
-         }
-     })
+              
+              }
+        }.resume()
+    }
 }
 
 

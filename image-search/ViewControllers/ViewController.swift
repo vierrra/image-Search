@@ -23,20 +23,22 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         button.layer.cornerRadius = 27
+        activityIndicator.center = self.view.center
+        activityIndicator.style  = UIActivityIndicatorView.Style.large
+        view.addSubview(activityIndicator)
+        self.activityIndicator.startAnimating()
         self.getAlbum()
+        //self.activityIndicator.stopAnimating()
     
     }
     
    
     
     @IBAction func alterText(_ sender: Any) {
-        
-//        activityIndicator.center = self.view.center
-//        activityIndicator.style  = UIActivityIndicatorView.Style.large
-//
-//        view.addSubview(activityIndicator)
-//        self.activityIndicator.startAnimating()
-        self.getAlbum()
+                
+     
+      self.getAlbum()
+      //self.activityIndicator.stopAnimating()
 
 //                guard let fakeUrl = URL(string: urlApi) else { return }
 //
@@ -86,7 +88,7 @@ class ViewController: UIViewController {
 //
 //                            DispatchQueue.main.async {
 //                                Alert().display(self, "Attention", error.localizedDescription)
-//                                self.activityIndicator.stopAnimating()
+//                               self.activityIndicator.stopAnimating()
 //                            }
 //                        }
 //                }.resume()
@@ -94,36 +96,33 @@ class ViewController: UIViewController {
     }
     
     func getAlbum() {
-        mountAlbum (url: urlApi, view: self)
+        requestAlbum (url: urlApi, view: self)
     }
-    
+         
     func updateAlbum(gitData: SearchImages) {
-
-
-        request(getURL: gitData.albumCover!, requestResponse: { data, error in
-            DispatchQueue.main.sync {
-
-                if let url = URL(string: gitData.albumCover ?? "") {
-                   let data               = try? Data(contentsOf: url)
-                   let image: UIImage     = UIImage(data: data!)!
-                   let imageBlur: UIImage = UIImage(data: data!)!
-                   self.imageBlur.image   = imageBlur
-                   self.image.image       = image
-                }
-                
-                if let anameAlbum             = gitData.albumName {
-                    self.labelNameAlbum.text  = anameAlbum
-                }
-
-                if let anameArtist            = gitData.artistName {
-                    self.labelNameArtist.text = anameArtist
-                }
-
-                if let anameAlbumCover        = gitData.recordLabel {
-                    self.labelAlbumCover.text = anameAlbumCover
-                }
+        
+        DispatchQueue.main.sync {
+            if let url = URL(string: gitData.albumCover ?? "") {
+               let data               = try? Data(contentsOf: url)
+               let image: UIImage     = UIImage(data: data!)!
+               let imageBlur: UIImage = UIImage(data: data!)!
+               self.imageBlur.image   = imageBlur
+               self.image.image       = image
             }
-        })
+                    
+            if let anameAlbum            = gitData.albumName {
+               self.labelNameAlbum.text  = anameAlbum
+                            }
+
+            if let anameArtist            = gitData.artistName {
+                self.labelNameArtist.text = anameArtist
+            }
+
+            if let anameAlbumCover        = gitData.recordLabel {
+                self.labelAlbumCover.text = anameAlbumCover
+            }
+        }
     }
-    
 }
+    
+
