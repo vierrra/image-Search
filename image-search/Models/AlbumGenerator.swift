@@ -23,14 +23,23 @@ import UIKit
 func requestAlbum(url: String, view: ViewController) {
     if let fakeUrl = URL(string: "http://fakerapiexample.herokuapp.com/album") {
         URLSession.shared.dataTask(with: fakeUrl) { (data, response, error) in
-            guard let data = data else {return}
+            guard let data = data else {
+                
+//                DispatchQueue.main.async {
+//                    Alert().display((self, "Attention", error?.localizedDescription??, "Internet Offline"))
+//                }
+                
+                return
+            }
     
             do {
                 let decoder = JSONDecoder()
                 let gitData = try decoder.decode(SearchImages.self, from: data)
                 view.updateAlbum(gitData: gitData)
             } catch {
-              
+//                DispatchQueue.main.async {
+//                    Alert().display(self, "Attention", error.localizedDescription)
+//                }
               }
         }.resume()
     }

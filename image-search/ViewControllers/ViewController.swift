@@ -10,7 +10,6 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    //let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     let urlApi  = "http://fakerapiexample.herokuapp.com/album"
     let loading = ActivytyIndicator()
     
@@ -23,17 +22,9 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         button.layer.cornerRadius = 27
-        
-//        activityIndicator.center = self.view.center
-//        activityIndicator.style  = UIActivityIndicatorView.Style.large
-//        view.addSubview(activityIndicator)
-//        self.activityIndicator.startAnimating()
-        
         self.getAlbum()
-        
-        //self.activityIndicator.stopAnimating()
-    
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -43,7 +34,7 @@ class ViewController: UIViewController {
     @IBAction func alterText(_ sender: Any) {
                 
       self.getAlbum()
-      //self.activityIndicator.stopAnimating()
+      
 
 //                guard let fakeUrl = URL(string: urlApi) else { return }
 //
@@ -53,7 +44,7 @@ class ViewController: UIViewController {
 //
 //                       DispatchQueue.main.async {
 //                            Alert().display(self, "Attention", error?.localizedDescription ?? "Internet offline")
-//                            self.activityIndicator.stopAnimating()
+
 //                        }
 //
 //                        return
