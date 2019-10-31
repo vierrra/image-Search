@@ -10,7 +10,6 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    let urlApi  = "http://fakerapiexample.herokuapp.com/album"
     let loading = ActivytyIndicator()
     
     @IBOutlet weak var imageBlur       : UIImageView!
@@ -32,67 +31,11 @@ class ViewController: UIViewController {
     }
     
     @IBAction func alterText(_ sender: Any) {
-                
-      self.getAlbum()
-      
-
-//                guard let fakeUrl = URL(string: urlApi) else { return }
-//
-//                URLSession.shared.dataTask(with: fakeUrl) { (data, response, error) in
-//
-//                    guard let data = data else {
-//
-//                       DispatchQueue.main.async {
-//                            Alert().display(self, "Attention", error?.localizedDescription ?? "Internet offline")
-
-//                        }
-//
-//                        return
-//
-//                    }
-//
-//                         do {
-//                             let decoder = JSONDecoder()
-//                             let gitData = try decoder.decode(SearchImages.self, from: data)
-//
-//                                DispatchQueue.main.sync {
-//
-//                                        if let url = URL(string: gitData.albumCover ?? "") {
-//                                           let data               = try? Data(contentsOf: url)
-//                                           let image: UIImage     = UIImage(data: data!)!
-//                                           let imageBlur: UIImage = UIImage(data: data!)!
-//                                           self.imageBlur.image   = imageBlur
-//                                           self.image.image       = image
-//                                        }
-//
-//                                        if let anameAlbum             = gitData.albumName {
-//                                            self.labelNameAlbum.text  = anameAlbum
-//                                        }
-//
-//                                        if let anameArtist            = gitData.artistName {
-//                                            self.labelNameArtist.text = anameArtist
-//                                        }
-//
-//                                        if let anameAlbumCover        = gitData.recordLabel {
-//                                            self.labelAlbumCover.text = anameAlbumCover
-//                                        }
-//
-//                                    self.activityIndicator.stopAnimating()
-//                               }
-//
-//                        } catch {
-//
-//                            DispatchQueue.main.async {
-//                                Alert().display(self, "Attention", error.localizedDescription)
-//                               self.activityIndicator.stopAnimating()
-//                            }
-//                        }
-//                }.resume()
-        
+        self.getAlbum()
     }
     
     func getAlbum() {
-        requestAlbum (url: urlApi, view: self)
+        requestAlbum (url: "", view: self)
     }
          
     func updateAlbum(gitData: SearchImages) {
@@ -101,17 +44,17 @@ class ViewController: UIViewController {
         }
         
         DispatchQueue.main.sync {
-            if let url = URL(string: gitData.albumCover ?? "") {
+            if let url                = URL(string: gitData.albumCover ?? "") {
                let data               = try? Data(contentsOf: url)
                let image: UIImage     = UIImage(data: data!)!
                let imageBlur: UIImage = UIImage(data: data!)!
                self.imageBlur.image   = imageBlur
                self.image.image       = image
             }
-                    
+                        
             if let anameAlbum            = gitData.albumName {
                self.labelNameAlbum.text  = anameAlbum
-                            }
+            }
 
             if let anameArtist            = gitData.artistName {
                 self.labelNameArtist.text = anameArtist
@@ -120,7 +63,7 @@ class ViewController: UIViewController {
             if let anameAlbumCover        = gitData.recordLabel {
                 self.labelAlbumCover.text = anameAlbumCover
             }
-            self.loading.view.removeFromSuperview()
+                self.loading.view.removeFromSuperview()
         }
     }
 }

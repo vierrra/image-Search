@@ -2,7 +2,7 @@
 //  Alert.swift
 //  image-search
 //
-//  Created by Stant on 22/10/19.
+//  Created by Renato Vieira on 22/10/19.
 //  Copyright © 2019 Stant. All rights reserved.
 //
 
@@ -18,5 +18,4 @@ class Alert: NSObject {
 
         controller.present(alert, animated: true, completion: nil)
     }
-
 }
