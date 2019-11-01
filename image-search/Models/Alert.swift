@@ -9,13 +9,13 @@
 import Foundation
 import UIKit
 
-class Alert: NSObject {
-
-    func display(_ controller: UIViewController, _ titulo: String, _ mensagem: String) {
-        let alert = UIAlertController(title: titulo, message: mensagem, preferredStyle: .alert)
-        let button = UIAlertAction(title: "Ok", style: .default, handler: nil)
-        alert.addAction(button)
-
-        controller.present(alert, animated: true, completion: nil)
-    }
-}
+//class Alert: NSObject {
+//
+//    func showErrorAlert(_ controller: UIViewController, _ titulo: String, _ mensagem: String) {
+//        let alert = UIAlertController(title: titulo, message: mensagem, preferredStyle: .alert)
+//        let button = UIAlertAction(title: "Ok", style: .default, handler: nil)
+//        alert.addAction(button)
+//
+//        controller.present(alert, animated: true, completion: nil)
+//    }
+//}

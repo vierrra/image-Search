@@ -9,17 +9,18 @@
 import Foundation
 import UIKit
 
-class ActivytyIndicator: UIViewController {
+class ActivityIndicator: UIViewController {
     var activityIndicator = UIActivityIndicatorView()
         
     override func loadView() {
         view                 = UIView()
         view.backgroundColor = UIColor(white: 0, alpha: 0.8)
-        
-        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         activityIndicator.style                                     = UIActivityIndicatorView.Style.whiteLarge
+        
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false        
         activityIndicator.startAnimating()
-        view.addSubview(activityIndicator)        
+        view.addSubview(activityIndicator)
+        
         activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
     }

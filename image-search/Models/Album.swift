@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct SearchImages: Codable{
+struct Album: Codable {
 
     let id         : String?
     let artistName : String?
@@ -17,12 +17,10 @@ struct SearchImages: Codable{
     let albumCover : String?
 
     enum CodingKeys: String, CodingKey {
-
         case id
         case artistName   = "artist_name"
         case recordLabel  = "record_label"
         case albumName    = "album_name"
-        case albumCover   = "album_cover"
-    
+        case albumCover   = "album_cover"    
     }
 }

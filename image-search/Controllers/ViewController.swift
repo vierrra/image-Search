@@ -10,7 +10,7 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    let loading = ActivytyIndicator()
+    let loading = ActivityIndicator()
     
     @IBOutlet weak var imageBlur       : UIImageView!
     @IBOutlet weak var image           : UIImageView!
@@ -35,16 +35,24 @@ class ViewController: UIViewController {
     }
     
     func getAlbum() {
-        requestAlbum (url: "", view: self)
+        requestAlbum (view: self)
+    }
+    
+    func showErrorAlert(_ controller: UIViewController, _ title: String, _ message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let button = UIAlertAction(title: "Ok", style: .default, handler: nil)
+        alert.addAction(button)
+
+        controller.present(alert, animated: true, completion: nil)
     }
          
-    func updateAlbum(gitData: SearchImages) {
+    func updateAlbum(album: Album) {
         DispatchQueue.main.sync {
             view.addSubview(loading.view)
         }
         
         DispatchQueue.main.sync {
-            if let url                = URL(string: gitData.albumCover ?? "") {
+            if let url                = URL(string: album.albumCover ?? "") {
                let data               = try? Data(contentsOf: url)
                let image: UIImage     = UIImage(data: data!)!
                let imageBlur: UIImage = UIImage(data: data!)!
@@ -52,16 +60,16 @@ class ViewController: UIViewController {
                self.image.image       = image
             }
                         
-            if let anameAlbum            = gitData.albumName {
-               self.labelNameAlbum.text  = anameAlbum
+            if let albumName             = album.albumName {
+               self.labelNameAlbum.text  = albumName
             }
 
-            if let anameArtist            = gitData.artistName {
-                self.labelNameArtist.text = anameArtist
+            if let artistName             = album.artistName {
+                self.labelNameArtist.text = artistName
             }
 
-            if let anameAlbumCover        = gitData.recordLabel {
-                self.labelAlbumCover.text = anameAlbumCover
+            if let recordName             = album.recordLabel {
+                self.labelAlbumCover.text = recordName
             }
                 self.loading.view.removeFromSuperview()
         }
