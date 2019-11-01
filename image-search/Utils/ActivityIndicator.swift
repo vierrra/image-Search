@@ -13,9 +13,9 @@ class ActivityIndicator: UIViewController {
     var activityIndicator = UIActivityIndicatorView()
         
     override func loadView() {
-        view                 = UIView()
-        view.backgroundColor = UIColor(white: 0, alpha: 0.8)
-        activityIndicator.style                                     = UIActivityIndicatorView.Style.whiteLarge
+        view                    = UIView()
+        view.backgroundColor    = UIColor(white: 0, alpha: 0.8)
+        activityIndicator.style = UIActivityIndicatorView.Style.whiteLarge
         
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false        
         activityIndicator.startAnimating()

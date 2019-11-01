@@ -35,6 +35,7 @@ class ViewController: UIViewController {
     }
     
     func getAlbum() {
+        view.addSubview(loading.view)
         requestAlbum (view: self)
     }
     
@@ -42,36 +43,25 @@ class ViewController: UIViewController {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let button = UIAlertAction(title: "Ok", style: .default, handler: nil)
         alert.addAction(button)
-
+        self.loading.view.removeFromSuperview()
         controller.present(alert, animated: true, completion: nil)
     }
          
     func updateAlbum(album: Album) {
         DispatchQueue.main.sync {
-            view.addSubview(loading.view)
-        }
-        
-        DispatchQueue.main.sync {
             if let url                = URL(string: album.albumCover ?? "") {
                let data               = try? Data(contentsOf: url)
-               let image: UIImage     = UIImage(data: data!)!
-               let imageBlur: UIImage = UIImage(data: data!)!
-               self.imageBlur.image   = imageBlur
-               self.image.image       = image
+                 if let data = data {
+                    let image: UIImage     = UIImage(data: data)!
+                    let imageBlur: UIImage = UIImage(data: data)!
+                    self.imageBlur.image   = imageBlur
+                    self.image.image       = image
+                }
             }
-                        
-            if let albumName             = album.albumName {
-               self.labelNameAlbum.text  = albumName
-            }
-
-            if let artistName             = album.artistName {
-                self.labelNameArtist.text = artistName
-            }
-
-            if let recordName             = album.recordLabel {
-                self.labelAlbumCover.text = recordName
-            }
-                self.loading.view.removeFromSuperview()
+            self.labelNameAlbum.text  = album.albumName
+            self.labelNameArtist.text = album.artistName
+            self.labelAlbumCover.text = album.recordLabel
+            self.loading.view.removeFromSuperview()
         }
     }
 }
