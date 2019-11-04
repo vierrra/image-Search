@@ -51,9 +51,9 @@ class ViewController: UIViewController {
         DispatchQueue.main.sync {
             if let url                = URL(string: album.albumCover ?? "") {
                let data               = try? Data(contentsOf: url)
-                 if let data = data {
-                    let image: UIImage     = UIImage(data: data)!
-                    let imageBlur: UIImage = UIImage(data: data)!
+                if let data = data {
+                    let image: UIImage     = UIImage(data: data) ?? UIImage()
+                    let imageBlur: UIImage = UIImage(data: data) ?? UIImage()
                     self.imageBlur.image   = imageBlur
                     self.image.image       = image
                 }
